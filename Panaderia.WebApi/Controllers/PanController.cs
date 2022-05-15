@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Panaderia.ApplicationCore.DTOs;
 using Panaderia.ApplicationCore.Services;
 
 namespace Panaderia.WebApi.Controllers;
@@ -9,17 +10,17 @@ namespace Panaderia.WebApi.Controllers;
 [Route("api/[controller]")]
 public class PanController : ControllerBase
 {
-    public IPanService PanService { get; set; }
+    public IPanService panService { get; set; }
     
     public PanController(IPanService panService)
     {
-        this.PanService = panService;
+        this.panService = panService;
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-        var result = PanService.Read();
+        var result = panService.Read();
         return Ok(result);
     }
 
@@ -27,7 +28,14 @@ public class PanController : ControllerBase
     [Route("{id}")]
     public IActionResult Get(int id)
     {
-        var result = PanService.Read(id);
+        var result = panService.Read(id);
         return Ok(result);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] PanDto request)
+    {
+        panService.Create(request);
+        return Ok();
     }
 }

@@ -9,7 +9,10 @@ namespace Panaderia.ApplicationCore.Mappers
         public PanMapper()
         {
             CreateMap<Proveedor, ProveedorDto>();            
+            CreateMap<ProveedorDto, Proveedor>();                        
+
             CreateMap<Pan, PanDto>();
+            CreateMap<PanDto, Pan>();
         }
     }
 }

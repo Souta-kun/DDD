@@ -7,16 +7,18 @@ namespace Panaderia.Infrastructure.Repository
 {
     public class PanRepository : IPanRepository
     {
-        private readonly PanaderiaContext panaderiaContext;
+        private readonly PanaderiaContext context;
 
         public PanRepository(PanaderiaContext panaderiaContext)
         {
-            this.panaderiaContext = panaderiaContext;
+            this.context = panaderiaContext;
         }
 
         public void Create(Pan entity)
         {
-            throw new NotImplementedException();
+            entity.Proveedor = null;
+            context.Pan.Add(entity);            
+            context.SaveChanges();
         }
 
         public void Delete(int id)
@@ -26,14 +28,14 @@ namespace Panaderia.Infrastructure.Repository
 
         public Pan Read(int id)
         {
-            return this.panaderiaContext.Pan
+            return this.context.Pan
                 .Include(p => p.Proveedor)
-                .FirstOrDefault(p => p.Id == id);
+                .First(p => p.Id == id);
         }
 
         public IEnumerable<Pan> Read()
         {
-            return this.panaderiaContext.Pan
+            return this.context.Pan
                 .Include(p => p.Proveedor)
                 .ToList();
         }

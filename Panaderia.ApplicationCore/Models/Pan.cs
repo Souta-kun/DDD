@@ -5,6 +5,11 @@ namespace Panaderia.ApplicationCore.Models
 {
     public class Pan : Entity
     {
+        public Pan()
+        {
+            Creado = DateTime.Now;
+        }
+
         public string Nombre { get; set; }
         public HarinaEnum Harina { get; set; }
         public double Precio { get; set; }

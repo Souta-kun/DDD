@@ -1,6 +1,6 @@
 using Panaderia.ApplicationCore.DTOs;
 
-namespace Panaderia.ApplicationCore.Services
+namespace Panaderia.ApplicationCore.Services.Pan
 {
     public interface IPanService
     {

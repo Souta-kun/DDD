@@ -1,9 +1,8 @@
 using AutoMapper;
 using Panaderia.ApplicationCore.DTOs;
 using Panaderia.ApplicationCore.Interfaces;
-using Panaderia.ApplicationCore.Models;
 
-namespace Panaderia.ApplicationCore.Services
+namespace Panaderia.ApplicationCore.Services.Pan
 {
     public class PanService : IPanService
     {
@@ -17,7 +16,7 @@ namespace Panaderia.ApplicationCore.Services
         }
 
         public void Create(PanDto entity)
-            => this.panRepository.Create(mapper.Map<Pan>(entity));
+            => this.panRepository.Create(mapper.Map<Models.Pan>(entity));
 
         public void Delete(int id) 
             => this.panRepository.Delete(id);
@@ -37,6 +36,6 @@ namespace Panaderia.ApplicationCore.Services
         }
 
         public void Update(PanDto entity)
-            => this.panRepository.Update(mapper.Map<Pan>(entity));
+            => this.panRepository.Update(mapper.Map<Models.Pan>(entity));
     }
 }

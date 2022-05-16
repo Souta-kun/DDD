@@ -1,9 +1,11 @@
 using Panaderia.ApplicationCore.Interfaces;
-using Panaderia.ApplicationCore.Services;
+using Panaderia.ApplicationCore.Services.Pan;
 using Panaderia.Infrastructure.Database;
 using Panaderia.Infrastructure.Repository;
 using Panaderia.WebApi.Filters;
 using Microsoft.EntityFrameworkCore;
+using Panaderia.ApplicationCore.Services.Proveedor;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PanaderiaDb");
@@ -12,6 +14,9 @@ var connectionString = builder.Configuration.GetConnectionString("PanaderiaDb");
 // Exceptions
 builder.Services.AddControllers(
     options => options.Filters.Add(new CustomFilterException())
+)
+.AddJsonOptions(
+    opt => opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
 );
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,6 +32,8 @@ builder.Services.AddDbContext<PanaderiaContext>(
 builder.Services.AddScoped<PanaderiaContext>();
 builder.Services.AddScoped<IPanService, PanService>();
 builder.Services.AddScoped<IPanRepository, PanRepository>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
+builder.Services.AddScoped<IProveedorRepository, ProveedorRepository>();
 
 // CORS
 builder.Services.AddCors(p => p.AddPolicy("CorsApp", builder =>

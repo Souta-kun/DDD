@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Panaderia.ApplicationCore.DTOs;
-using Panaderia.ApplicationCore.Services;
+using Panaderia.ApplicationCore.Services.Pan;
 
 namespace Panaderia.WebApi.Controllers;
 

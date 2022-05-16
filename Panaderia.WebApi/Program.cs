@@ -15,6 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("PanaderiaDb");
 builder.Services.AddControllers(
     options => options.Filters.Add(new CustomFilterException())
 )
+// Avoid Circular Reference
 .AddJsonOptions(
     opt => opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
 );

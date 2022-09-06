@@ -10,30 +10,25 @@ namespace Panaderia.WebApi.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            ApiResult result = new ApiResult()
-            {
-                Error = true,
-                Exception = new ApiResultException(
-                    message: "Ha ocurrido un error. Comuniquese con su Administrador.", 
-                    source: null, 
-                    stackTrace: null)
-            };
+            ApiResult result = new ApiResult(
+                error: new APIError(
+                    message: "Ha ocurrido un error. Comuniquese con su Administrador.",
+                    codeStatus: HttpStatusCode.InternalServerError,
+                    stackTrace: context.Exception.StackTrace)
+                );
 
             var exceptionType = context.Exception.GetType();
 
             if (exceptionType == typeof(PanaderiaException))
             {
                 var exception = (PanaderiaException)context.Exception;
+                result.Error.Message = exception.Message;
+                result.Error.CodeStatus = exception.CodeStatus;
 
-                result.Exception.Message = exception.Message;
-                result.Exception.Source = exception.Source;
-                result.Exception.StackTrace = exception.StackTrace;
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.HttpContext.Response.StatusCode = (int)exception.CodeStatus;
             }
             else
             {
-                result.Exception.Source = context.Exception.Source;
-                result.Exception.StackTrace = context.Exception.StackTrace;
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
